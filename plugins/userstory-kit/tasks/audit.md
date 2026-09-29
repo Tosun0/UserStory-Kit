@@ -79,6 +79,8 @@
 
 ## 2. 코드·파일 무결성 검사
 
+- `python <플러그인 루트>/scripts/userstory.py audit <폴더 또는 ZIP> --title "실제 타이틀"`을 실행한다. 파일·기본 골격·식별자·경로·금지 코드 후보·SVG·ZIP CRC/용량의 정적 증거를 제공한다. `browser/media_decode/platform: not_run`과 `delivery: review`를 최종 통과로 바꾸지 않는다.
+- 임의 JS의 동적 URL, 실제 미디어 디코딩, CSS의 모든 실행 조건, 금칙어·이미지 합성 글은 정적 도구만으로 판정할 수 없다. 아래 소스 대조와 실호스팅 검사를 함께 수행한다. 검사기 자체의 256MB ZIP 해제 용량 제한은 가이드 한도가 아니며, 그 제한에 걸리면 원본 폴더로 검수한다.
 - HTML DOM으로 main 직속 블록의 순서·class·표준 ID·고정 screen ID·실제 타이틀을 확인한다. 문서 전체 id와 screen ID 중복도 확인한다.
 - 기준 템플릿과 비교하여 슬롯 밖 무단 변경이 없는지 확인한다. 타이틀 치환과 데이터북 삭제는 허용한다. CSS/JS 기본 코드도 비교한다.
 - 모든 소스 파일에서 외부 하이퍼링크, 외부 iframe·스크립트·CSS·폰트·이미지·API 요청, 스토리지, Service Worker, 예약 class/경로, 고정 헤더/메뉴, 자체 플랫폼 UI, History 변경을 검사한다. 단순 문자열 일치와 실제 실행·참조를 구분한다.

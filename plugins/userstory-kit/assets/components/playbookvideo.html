@@ -1,0 +1,16 @@
+<div class="ukvideo">
+  <video class="ukvideo-media" src="{{source}}" aria-label="{{alt}}" playsinline preload="metadata"></video>
+  <button class="ukvideo-start" type="button" aria-label="클릭하여 시작">
+    <span class="ukvideo-guide">
+      <span class="ukvideo-motion" aria-hidden="true"></span>
+      <span class="ukvideo-copy"><strong>클릭하여 시작</strong><small>사운드와 함께 재생됩니다</small></span>
+    </span>
+  </button>
+  <button class="ukvideo-play" type="button" aria-label="재생" hidden>▶</button>
+  <button class="ukvideo-replay" type="button" hidden>⟳ 다시 보기</button>
+  <div class="ukvideo-volume" hidden>
+    <input class="ukvideo-slider" type="range" min="0" max="1" step=".05" value="1" aria-label="볼륨">
+    <button class="ukvideo-mute" type="button" aria-label="음소거" aria-pressed="false">🔊</button>
+  </div>
+  <p class="ukvideo-error" role="alert" hidden></p>
+</div>

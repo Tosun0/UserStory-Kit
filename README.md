@@ -15,6 +15,8 @@ Codex의 Git 마켓플레이스 추가 화면에서 `https://github.com/Tosun0/U
 - [에이전트 지침](plugins/userstory-kit/AGENTS.md): 제작 규칙과 원본 가이드 우선순위
 - [원본 가이드](plugins/userstory-kit/references/guidev0929.md): v0929 전달본, 문서 내부 표제는 v0824 유지
 - [기준 템플릿](plugins/userstory-kit/assets/template/index.html): index.html 및 assets 구조
+- [부품 양식](plugins/userstory-kit/assets/components): 영상형 플레이북, 카드형 시캔, 이미지형 플레이북·세로형 시캔 공통 img
+- [조립·정적 검사기](plugins/userstory-kit/scripts/userstory.py): 원본 복사·슬롯 조립·리디렉터링·ZIP 제작과 재검사 (Python 표준 라이브러리)
 - [제작 태스크](plugins/userstory-kit/tasks/build.md) / [검수 태스크](plugins/userstory-kit/tasks/audit.md): 조립·검수·ZIP 전달 절차
 
 ## 사용
@@ -26,4 +28,18 @@ Codex에 플러그인을 설치한 뒤 새 대화에서 다음 스킬을 사용�
 
 원본 템플릿은 그대로 보관하고 별도 출력 사본에만 작성합니다. Git에서 사라지는 빈 리소스 폴더는 제작 태스크가 복원합니다. 생성한 콘텐츠·검수 캡처·ZIP은 이 플러그인 원본에 섞지 않습니다.
 
-플러그인 소스를 갱신하면 설치본도 갱신하고 새 대화에서 확인합니다. 현재 키트는 스킬·태스크·양식 묶음이며, 별도의 제작 GUI나 자동 빌드 서버는 포함하지 않습니다.
+플러그인 소스를 갱신한 뒤 Git 설치본 갱신은 사용자가 진행합니다. 개인 설정이나 캐시를 별도로 덮어쓰지 않습니다. 제작 GUI나 자동 빌드 서버는 포함하지 않습니다.
+
+## 양식 출처와 정리
+
+| 부품 | 가져온 기준 | 정리한 부분 |
+|---|---|---|
+| 카드 시캔 | `Hyundai_UserStory_Card`와 현재 Tech의 SC 코드 | 크기·전환·숫자 캡슐 유지. 플레이북·헤더·History·스크롤 자동 스냅·모바일 규칙 제거. 시캔 자체 코드만 포함 |
+| 세로형 / 이미지 | `Hyundai_UserStory_Journal`과 현재 Tech의 이미지 배치 | 원본 비율·중앙·자연 스크롤을 공통 img로 구현. 정적 이미지에 SVG 로더·Lottie를 붙이지 않음 |
+| 영상 플레이북 | 현재 `Hyundai_UserStory_14px_Photo`의 재생 UI | 시작 캡슐·중앙 조작·볼륨 UI 재사용. 고정 조작을 블록 내부 배치로 변경하고 종료 후 중앙 다시보기 유지. 자동 페이지 이동·전역 음소거 해제·별도 시캔 상태 제거 |
+
+형식별 본문은 제공된 새 전달 템플릿의 붙여넣기 슬롯에 넣습니다. 원본 가이드·기준 템플릿은 보존합니다. 영상은 잘리지 않도록 contain을 사용하므로 원본 비율에 따라 여백이 생깁니다. 볼륨은 좌측 56px·하단 112px로 플랫폼 UI를 피합니다. 카드 크기는 기존 `min(가로−80px, 세로−208px, 1080px)`를 공유합니다.
+
+순수 미디어의 입력 JSON과 실행 명령은 [제작 태스크](plugins/userstory-kit/tasks/build.md)에 있습니다. 완성 영상 한 파일, 이미지/카드/세로형 한 장 이상, 선택 이미지 데이터북을 자동 조립합니다. 작성된 HTML·PDF·게임·영상 분기는 같은 스킬이 원본 코드를 슬롯에 조립하며 자동으로 평탄화하지 않습니다.
+
+플러그인 루트에서 `python scripts/test_userstory.py`를 실행하면 8가지 조합과 누락·대소문자·외부 참조·중복 식별자·스토리지·스크롤 가로채기·ZIP 탈출·덮어쓰기 거부를 확인합니다. 자동 정적 검사는 실호스팅, 미디어 재생, 실제 플랫폼 검수와 구분됩니다.

@@ -1,0 +1,8 @@
+/* Shared by image playbooks, vertical canvases and image databooks. */
+.ukimage {
+  display: block;
+  width: 100%;
+  max-width: 1920px;
+  height: auto;
+  margin: 0 auto;
+}
