@@ -1,4 +1,4 @@
 interface:
   display_name: "00. 총괄"
-  short_description: "블록 제작을 연결하고 전체 검수와 업로드용 ZIP 납품을 총괄합니다"
-  default_prompt: "$00-userstory로 제목과 첨부한 플레이북·시나리오 캔버스·선택 데이터북을 조립하고 최종 검수해 주세요."
+  short_description: "블록 제작과 직접 화면 검수를 총괄하며 ZIP은 요청 시 별도로 포장합니다"
+  default_prompt: "$00-userstory로 제목과 첨부한 플레이북·시나리오 캔버스·선택 데이터북을 조립하고 실호스팅에서 직접 화면을 확인해 검수해 주세요."

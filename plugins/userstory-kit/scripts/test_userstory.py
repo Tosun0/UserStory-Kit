@@ -5,10 +5,11 @@ import json
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 import tempfile
 import zipfile
 
-from userstory import audit_path, build
+from userstory import audit_path, build, package
 
 
 def main():
@@ -31,12 +32,17 @@ def main():
                       "databook": {"type": "image", "files": [image.name]} if data else None}
             config_path.write_text(json.dumps(config, ensure_ascii=False), encoding="utf-8")
             output, archive = root / f"case{number}", root / f"case{number}.zip"
-            result = build(config_path, output, archive)
+            result = build(config_path, output)
             assert result["code"] == "passed", result
             assert result["browser"] == result["media_decode"] == result["platform"] == "not_run"
+            assert "zip" not in result and not archive.exists()
             page = (output / "index.html").read_text(encoding="utf-8")
             assert tab_title in page
             assert ('id="data-book"' in page) == data
+            packed = package(output, archive, config["title"])
+            assert packed["code"] == "passed", packed
+            assert packed["browser"] == packed["media_decode"] == packed["platform"] == "not_run"
+            assert result["delivery"] == packed["delivery"] == "review"
             with zipfile.ZipFile(archive) as packaged:
                 assert all(name == "index.html" or name.startswith("assets/") for name in packaged.namelist())
                 assert tab_title in packaged.read("index.html").decode("utf-8")
@@ -47,11 +53,28 @@ def main():
             good = output
         assert all(path.read_bytes() == content for path, content in originals.items())
         try:
-            build(config_path, good, root / "overwrite.zip")
+            build(config_path, good)
         except ValueError as error:
             assert "already exists" in str(error)
         else:
             raise AssertionError("An existing delivery must never be overwritten")
+        for target, message in ((archive, "already exists"), (good / "inside.zip", "outside the content folder")):
+            try:
+                package(good, target)
+            except ValueError as error:
+                assert message in str(error)
+            else:
+                raise AssertionError("ZIP overwrite or packaging inside content was accepted")
+        assert not (good / "inside.zip").exists()
+
+        script = Path(__file__).with_name("userstory.py")
+        cli_output, cli_zip = root / "clioutput", root / "clioutput.zip"
+        built_cli = subprocess.run([sys.executable, "-X", "utf8", "-B", str(script), "build", str(config_path), str(cli_output)],
+                                   check=True, capture_output=True, encoding="utf-8")
+        assert json.loads(built_cli.stdout)["code"] == "passed" and not cli_zip.exists()
+        packed_cli = subprocess.run([sys.executable, "-X", "utf8", "-B", str(script), "package", str(cli_output), str(cli_zip),
+                                     "--title", config["title"]], check=True, capture_output=True, encoding="utf-8")
+        assert json.loads(packed_cli.stdout)["code"] == "passed" and cli_zip.is_file()
 
         index = good / "index.html"
         original = index.read_bytes()
@@ -66,6 +89,16 @@ def main():
             assert needle.encode() in original
             index.write_bytes(original.replace(needle.encode(), replacement.encode(), 1))
             assert any(message in item for item in audit_path(good)["errors"]), message
+        index.write_bytes(original)
+        index.write_bytes(original.replace(tab_title.encode(), b"<title>Wrong</title>", 1))
+        rejected_zip = root / "rejected.zip"
+        try:
+            package(good, rejected_zip, config["title"])
+        except ValueError as error:
+            assert "Static audit failed; ZIP not created" in str(error)
+        else:
+            raise AssertionError("Content with a failed audit was packaged")
+        assert not rejected_zip.exists()
         index.write_bytes(original)
         app = good / "assets/app.js"
         original_js = app.read_bytes()
@@ -108,7 +141,7 @@ def main():
             raise AssertionError("An invalid empty package directory was accepted")
         (good / "assets/BadName").rmdir()
         assert audit_path(good)["code"] == "passed"
-    print("PASS: 8 media combinations, browser tab titles/escaping, optional databook removal, exact bytes/paths, source protection and rejection checks")
+    print("PASS: 8 media combinations, separate build/package commands, browser tab titles/escaping, exact bytes/paths, source protection and rejection checks")
     print("JS syntax: " + ("PASS" if node else "NOT RUN (node unavailable)"))
     print("Media decoding/browser/platform: NOT RUN by this self-check; use tasks/audit.md")
 

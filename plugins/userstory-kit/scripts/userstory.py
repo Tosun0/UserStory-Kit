@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Assemble media in the supplied shell; audit folders/ZIPs without extracting them."""
+"""Assemble media, audit folders/ZIPs and package completed folders in separate commands."""
 
 import argparse
 import html
@@ -295,7 +295,7 @@ def audit_path(path, title=None):
                      title, path.stat().st_size)
 
 
-def build(config_path, output, zip_path):
+def build(config_path, output):
     config_path = Path(config_path).resolve()
     config = json.loads(read(config_path))
     if not isinstance(config, dict) or set(config) - {"title", "playbook", "scenariocanvas", "databook"}:
@@ -303,11 +303,11 @@ def build(config_path, output, zip_path):
     title = config.get("title")
     if not isinstance(title, str) or not title.strip() or title != title.strip() or any(ord(c) < 32 for c in title):
         raise ValueError("A nonempty actual title without boundary whitespace/control characters is required")
-    output, zip_path = Path(output).resolve(), Path(zip_path).resolve()
-    if output.exists() or zip_path.exists():
-        raise ValueError("Output/ZIP already exists; choose new paths, never overwrite source or a delivery")
-    if output == zip_path or output.is_relative_to(ROOT) or zip_path.is_relative_to(ROOT) or zip_path.is_relative_to(output):
-        raise ValueError("Keep generated output and ZIP outside the plugin and keep ZIP outside the output folder")
+    output = Path(output).resolve()
+    if output.exists():
+        raise ValueError("Output already exists; choose a new path, never overwrite source or a delivery")
+    if output.is_relative_to(ROOT):
+        raise ValueError("Keep generated output outside the plugin")
     prepared, mapping = [], []
     for key, section, folder, prefix, kinds in (
         ("playbook", "playbook", "playbook", "p", {"video", "image"}),
@@ -331,7 +331,7 @@ def build(config_path, output, zip_path):
             source = (config_path.parent / entry["path"]).resolve()
             if not source.is_file() or source.stat().st_size == 0:
                 raise ValueError(f"Missing/empty media: {source}")
-            if source == zip_path or source.is_relative_to(output):
+            if source.is_relative_to(output):
                 raise ValueError("An input overlaps the output")
             if source.suffix.lower() not in (VIDEOS if kind == "video" else IMAGES):
                 raise ValueError(f"Unsupported {kind} media: {source}")
@@ -383,29 +383,52 @@ def build(config_path, output, zip_path):
     result = audit_path(output, title)
     if result["errors"]:
         raise ValueError(f"Static audit failed; output retained for repair: {result['errors']}")
+    result.update({"output": str(output), "assets": mapping})
+    return result
+
+
+def package(output, zip_path, title=None):
+    output, zip_path = Path(output).resolve(), Path(zip_path).resolve()
+    if not output.is_dir():
+        raise ValueError("Packaging needs an existing content folder")
+    if zip_path.exists():
+        raise ValueError("ZIP already exists; choose a new path, never overwrite source or a delivery")
+    if output.is_relative_to(ROOT) or zip_path.is_relative_to(ROOT) or zip_path.is_relative_to(output):
+        raise ValueError("Keep content and ZIP outside the plugin and keep ZIP outside the content folder")
+    result = audit_path(output, title)
+    if result["errors"]:
+        raise ValueError(f"Static audit failed; ZIP not created: {result['errors']}")
     zip_path.parent.mkdir(parents=True, exist_ok=True)
     with zip_path.open("xb") as handle, zipfile.ZipFile(handle, "w", zipfile.ZIP_DEFLATED) as archive:
         for item in sorted(output.rglob("*")):
             if item.is_file():
                 archive.write(item, item.relative_to(output).as_posix())
     result = audit_path(zip_path, title)
-    result.update({"output": str(output), "zip": str(zip_path), "assets": mapping})
+    result.update({"output": str(output), "zip": str(zip_path)})
     return result
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
-    make = commands.add_parser("build", help="Assemble the standard media components into a NEW output folder and ZIP")
+    make = commands.add_parser("build", help="Assemble the standard media components into a NEW output folder; no ZIP")
     make.add_argument("config")
     make.add_argument("output")
-    make.add_argument("zip")
+    pack = commands.add_parser("package", help="Package an existing content folder; not browser/platform approval")
+    pack.add_argument("path")
+    pack.add_argument("zip")
+    pack.add_argument("--title")
     check = commands.add_parser("audit", help="Read-only static inspection; not browser/platform approval")
     check.add_argument("path")
     check.add_argument("--title")
     args = parser.parse_args()
     try:
-        result = build(args.config, args.output, args.zip) if args.command == "build" else audit_path(args.path, args.title)
+        if args.command == "build":
+            result = build(args.config, args.output)
+        elif args.command == "package":
+            result = package(args.path, args.zip, args.title)
+        else:
+            result = audit_path(args.path, args.title)
     except (OSError, ValueError, UnicodeError, zipfile.BadZipFile) as exc:
         print(json.dumps({"code": "failed", "errors": [str(exc)]}, ensure_ascii=False, indent=2))
         return 1

@@ -16,8 +16,8 @@ Codex의 Git 마켓플레이스 추가 화면에서 `https://github.com/Tosun0/U
 - [원본 가이드](plugins/userstory-kit/references/guidev0929.md): v0929 전달본, 문서 내부 표제는 v0824 유지
 - [기준 템플릿](plugins/userstory-kit/assets/template/index.html): index.html 및 assets 구조
 - [부품 양식](plugins/userstory-kit/assets/components): 영상형 플레이북, 카드형 시캔, 이미지형 플레이북·세로형 시캔 공통 img
-- [조립·정적 검사기](plugins/userstory-kit/scripts/userstory.py): 원본 복사·슬롯 조립·리디렉터링·ZIP 제작과 재검사 (Python 표준 라이브러리)
-- [제작 태스크](plugins/userstory-kit/tasks/build.md) / [검수 태스크](plugins/userstory-kit/tasks/audit.md): 조립·검수·ZIP 전달 절차
+- [조립·정적 검사기](plugins/userstory-kit/scripts/userstory.py): 폴더 제작 `build`, 읽기 전용 검사 `audit`, 별도 ZIP 포장 `package` (Python 표준 라이브러리)
+- [제작 태스크](plugins/userstory-kit/tasks/build.md) / [검수 태스크](plugins/userstory-kit/tasks/audit.md) / [ZIP 포장 태스크](plugins/userstory-kit/tasks/package.md): 제작·직접 화면 검수 후 요청 시 포장
 
 ## 사용
 
@@ -25,12 +25,14 @@ Codex에 플러그인을 설치한 뒤 새 대화에서 다음 스킬을 사용�
 
 | 표시명 | 호출명 | 역할 |
 |---|---|---|
-| [00. 총괄](plugins/userstory-kit/skills/00-userstory/SKILL.md) | `$00-userstory` | 입력 확인·전체 조립·최종 검수·ZIP 납품. 전체 검수만 요청하면 읽기 전용 |
+| [00. 총괄](plugins/userstory-kit/skills/00-userstory/SKILL.md) | `$00-userstory` | 입력 확인·전체 조립·직접 화면 검수. ZIP은 요청 시 별도 포장, 검수만 요청하면 읽기 전용 |
 | [01. 플레이북](plugins/userstory-kit/skills/01-playbook/SKILL.md) | `$01-playbook` | 사용자 HTML 이관 또는 영상/이미지 조립. 원본 인터랙션·게임·분기·재생 조작 유지 |
 | [02. 시나리오 캔버스](plugins/userstory-kit/skills/02-scenariocanvas/SKILL.md) | `$02-scenariocanvas` | 카드/세로형 시캔의 배치·전환·인디케이터 |
 | [03. 데이터북](plugins/userstory-kit/skills/03-databook/SKILL.md) | `$03-databook` | 선택 데이터북 조립 또는 전체 블록 삭제 |
 
 전체 제작은 총괄로 시작하고, 특정 블록만 바꿀 때는 해당 스킬을 사용합니다. 블록 스킬은 다른 블록을 재생성하지 않습니다. 검수는 총괄의 후속 태스크로 유지하며 별도 중복 스킬은 두지 않습니다.
+
+기본 제작은 콘텐츠 폴더를 만든 뒤 에이전트가 로컬 HTTP로 직접 열어 화면·동작을 검수하고 결과를 보고하는 데까지입니다. ZIP은 자동 생성하지 않습니다. ZIP 포장을 요청하면 검수된 폴더를 별도 포장 태스크에서 묶고 다시 검사합니다. 검수 캡처·상세 보고서는 임시 경로에 보관합니다.
 
 원본 템플릿은 그대로 보관하고 별도 출력 사본에만 작성합니다. Git에서 사라지는 빈 리소스 폴더는 제작 태스크가 복원합니다. 생성한 콘텐츠·검수 캡처·ZIP은 이 플러그인 원본에 섞지 않습니다.
 
