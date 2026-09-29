@@ -1,4 +1,4 @@
 interface:
-  display_name: "02_시나리오 캔버스"
+  display_name: "02. 시나리오 캔버스"
   short_description: "카드 또는 세로형 시캔의 통일 양식과 이미지 배치를 적용합니다"
   default_prompt: "$02-scenariocanvas로 첨부한 시나리오 캔버스만 해당 양식에 조립하고 검수해 주세요."

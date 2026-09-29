@@ -2,7 +2,7 @@
 
 이 문서는 스킬에서 읽어 수행하는 작업 절차이며 예약 작업이나 자동 실행 서버가 아니다.
 
-전체 흐름은 [00_총괄](../skills/00-userstory/SKILL.md)이 맡고, 블록 절차는 [01_플레이북](../skills/01-playbook/SKILL.md) → [02_시나리오 캔버스](../skills/02-scenariocanvas/SKILL.md) → [03_데이터북](../skills/03-databook/SKILL.md) 순서로 적용한다. 단일 블록 요청은 해당 블록만 작업하며 다른 블록의 입력을 새로 요구하지 않는다.
+전체 흐름은 [00. 총괄](../skills/00-userstory/SKILL.md)이 맡고, 블록 절차는 [01. 플레이북](../skills/01-playbook/SKILL.md) → [02. 시나리오 캔버스](../skills/02-scenariocanvas/SKILL.md) → [03. 데이터북](../skills/03-databook/SKILL.md) 순서로 적용한다. 단일 블록 요청은 해당 블록만 작업하며 다른 블록의 입력을 새로 요구하지 않는다.
 
 기존 콘텐츠의 블록 수정은 그 콘텐츠의 작업 사본에서 해당 슬롯·코드·리소스만 수정한다. 골격 없는 부품만 요청됐다면 본문·CSS·JS 조각만 준비한다. 아래 전체 페이지 `build` 명령으로 기존 다른 블록을 재생성하지 않는다. 최종 통합 검수·ZIP은 총괄의 책임이다.
 

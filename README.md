@@ -25,10 +25,10 @@ Codex에 플러그인을 설치한 뒤 새 대화에서 다음 스킬을 사용�
 
 | 표시명 | 호출명 | 역할 |
 |---|---|---|
-| [00_총괄](plugins/userstory-kit/skills/00-userstory/SKILL.md) | `$00-userstory` | 입력 확인·전체 조립·최종 검수·ZIP 납품. 전체 검수만 요청하면 읽기 전용 |
-| [01_플레이북](plugins/userstory-kit/skills/01-playbook/SKILL.md) | `$01-playbook` | 사용자 HTML 이관 또는 영상/이미지 조립. 원본 인터랙션·게임·분기·재생 조작 유지 |
-| [02_시나리오 캔버스](plugins/userstory-kit/skills/02-scenariocanvas/SKILL.md) | `$02-scenariocanvas` | 카드/세로형 시캔의 배치·전환·인디케이터 |
-| [03_데이터북](plugins/userstory-kit/skills/03-databook/SKILL.md) | `$03-databook` | 선택 데이터북 조립 또는 전체 블록 삭제 |
+| [00. 총괄](plugins/userstory-kit/skills/00-userstory/SKILL.md) | `$00-userstory` | 입력 확인·전체 조립·최종 검수·ZIP 납품. 전체 검수만 요청하면 읽기 전용 |
+| [01. 플레이북](plugins/userstory-kit/skills/01-playbook/SKILL.md) | `$01-playbook` | 사용자 HTML 이관 또는 영상/이미지 조립. 원본 인터랙션·게임·분기·재생 조작 유지 |
+| [02. 시나리오 캔버스](plugins/userstory-kit/skills/02-scenariocanvas/SKILL.md) | `$02-scenariocanvas` | 카드/세로형 시캔의 배치·전환·인디케이터 |
+| [03. 데이터북](plugins/userstory-kit/skills/03-databook/SKILL.md) | `$03-databook` | 선택 데이터북 조립 또는 전체 블록 삭제 |
 
 전체 제작은 총괄로 시작하고, 특정 블록만 바꿀 때는 해당 스킬을 사용합니다. 블록 스킬은 다른 블록을 재생성하지 않습니다. 검수는 총괄의 후속 태스크로 유지하며 별도 중복 스킬은 두지 않습니다.
 
