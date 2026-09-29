@@ -2,12 +2,20 @@
 
 유저스토리 키트는 제공된 가이드와 템플릿으로 콘텐츠를 제작·검수하는 Codex 플러그인입니다.
 
+## Git으로 추가
+
+Codex의 Git 마켓플레이스 추가 화면에서 `https://github.com/Tosun0/UserStory-Kit.git`을 입력한 뒤, 목록의 **유저스토리 키트**를 설치합니다.
+
+저장소 루트의 [.agents/plugins/marketplace.json](.agents/plugins/marketplace.json)이 Git 등록용 목록이며, 플러그인 본체는 [plugins/userstory-kit](plugins/userstory-kit/.codex-plugin/plugin.json)에 있습니다. 등록 파일의 `source.path`는 저장소 루트를 기준으로 해석합니다.
+
+개인 마켓플레이스 등록이나 별도의 로컬 소스 설치는 필요하지 않습니다.
+
 ## 구성
 
-- [에이전트 지침](AGENTS.md): 제작 규칙과 원본 가이드 우선순위
-- [원본 가이드](references/guidev0929.md): v0929 전달본, 문서 내부 표제는 v0824 유지
-- [기준 템플릿](assets/template/index.html): index.html 및 assets 구조
-- [제작 태스크](tasks/build.md) / [검수 태스크](tasks/audit.md): 조립·검수·ZIP 전달 절차
+- [에이전트 지침](plugins/userstory-kit/AGENTS.md): 제작 규칙과 원본 가이드 우선순위
+- [원본 가이드](plugins/userstory-kit/references/guidev0929.md): v0929 전달본, 문서 내부 표제는 v0824 유지
+- [기준 템플릿](plugins/userstory-kit/assets/template/index.html): index.html 및 assets 구조
+- [제작 태스크](plugins/userstory-kit/tasks/build.md) / [검수 태스크](plugins/userstory-kit/tasks/audit.md): 조립·검수·ZIP 전달 절차
 
 ## 사용
 

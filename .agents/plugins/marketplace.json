@@ -1,0 +1,20 @@
+{
+  "name": "userstory-kit",
+  "interface": {
+    "displayName": "Userstory Kit"
+  },
+  "plugins": [
+    {
+      "name": "userstory-kit",
+      "source": {
+        "source": "local",
+        "path": "./plugins/userstory-kit"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
