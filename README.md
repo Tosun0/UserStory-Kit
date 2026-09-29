@@ -26,7 +26,7 @@ Codex에 플러그인을 설치한 뒤 새 대화에서 다음 스킬을 사용�
 | 표시명 | 호출명 | 역할 |
 |---|---|---|
 | [00_총괄](plugins/userstory-kit/skills/00-userstory/SKILL.md) | `$00-userstory` | 입력 확인·전체 조립·최종 검수·ZIP 납품. 전체 검수만 요청하면 읽기 전용 |
-| [01_플레이북](plugins/userstory-kit/skills/01-playbook/SKILL.md) | `$01-playbook` | 영상/이미지 플레이북과 재생·정지·볼륨·다시보기 |
+| [01_플레이북](plugins/userstory-kit/skills/01-playbook/SKILL.md) | `$01-playbook` | 사용자 HTML 이관 또는 영상/이미지 조립. 원본 인터랙션·게임·분기·재생 조작 유지 |
 | [02_시나리오 캔버스](plugins/userstory-kit/skills/02-scenariocanvas/SKILL.md) | `$02-scenariocanvas` | 카드/세로형 시캔의 배치·전환·인디케이터 |
 | [03_데이터북](plugins/userstory-kit/skills/03-databook/SKILL.md) | `$03-databook` | 선택 데이터북 조립 또는 전체 블록 삭제 |
 
@@ -46,6 +46,6 @@ Codex에 플러그인을 설치한 뒤 새 대화에서 다음 스킬을 사용�
 
 형식별 본문은 제공된 새 전달 템플릿의 붙여넣기 슬롯에 넣습니다. 원본 가이드·기준 템플릿은 보존합니다. 영상은 잘리지 않도록 contain을 사용하므로 원본 비율에 따라 여백이 생깁니다. 볼륨은 좌측 56px·하단 112px로 플랫폼 UI를 피합니다. 카드 크기는 기존 `min(가로−80px, 세로−208px, 1080px)`를 공유합니다.
 
-순수 미디어의 입력 JSON과 실행 명령은 [제작 태스크](plugins/userstory-kit/tasks/build.md)에 있습니다. 완성 영상 한 파일, 이미지/카드/세로형 한 장 이상, 선택 이미지 데이터북을 자동 조립합니다. 작성된 HTML·PDF·게임·영상 분기는 같은 스킬이 원본 코드를 슬롯에 조립하며 자동으로 평탄화하지 않습니다.
+순수 미디어의 입력 JSON과 실행 명령은 [제작 태스크](plugins/userstory-kit/tasks/build.md)에 있습니다. 완성 영상 한 파일, 이미지/카드/세로형 한 장 이상, 선택 이미지 데이터북을 자동 조립합니다. 사용자 HTML은 [HTML 이관 태스크](plugins/userstory-kit/tasks/playbookhtml.md)로 본문·CSS·JS·로컬 의존 리소스를 옮깁니다. 플레이북은 고정 양식이 아니므로 게임·인터랙션·영상 분기를 영상/이미지 부품으로 대체하지 않습니다. CLI는 순수 미디어 전용이고, 작성된 HTML·PDF 등은 해당 블록 스킬이 원본 기능을 보존해 조립합니다.
 
 플러그인 루트에서 `python scripts/test_userstory.py`를 실행하면 8가지 조합과 누락·대소문자·외부 참조·중복 식별자·스토리지·스크롤 가로채기·ZIP 탈출·덮어쓰기 거부를 확인합니다. 자동 정적 검사는 실호스팅, 미디어 재생, 실제 플랫폼 검수와 구분됩니다.
