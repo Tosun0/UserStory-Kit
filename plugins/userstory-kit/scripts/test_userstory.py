@@ -22,9 +22,10 @@ def main():
         video.write_bytes(b"\x1a\x45\xdf\xa3static-path-test-only")
         originals = {path: path.read_bytes() for path in (image, video)}
         config_path = root / "input.json"
+        tab_title = '<title>제목 "인용" &amp; &lt;확인&gt;</title>'
         good = None
         for number, (pb, canvas, data) in enumerate(itertools.product(("video", "image"), ("card", "vertical"), (False, True))):
-            config = {"title": '제목 "인용" & 확인',
+            config = {"title": '제목 "인용" & <확인>',
                       "playbook": {"type": pb, "files": [video.name if pb == "video" else image.name]},
                       "scenariocanvas": {"type": canvas, "files": [image.name] * (2 if canvas == "card" else 1)},
                       "databook": {"type": "image", "files": [image.name]} if data else None}
@@ -33,9 +34,12 @@ def main():
             result = build(config_path, output, archive)
             assert result["code"] == "passed", result
             assert result["browser"] == result["media_decode"] == result["platform"] == "not_run"
-            assert ('id="data-book"' in (output / "index.html").read_text(encoding="utf-8")) == data
+            page = (output / "index.html").read_text(encoding="utf-8")
+            assert tab_title in page
+            assert ('id="data-book"' in page) == data
             with zipfile.ZipFile(archive) as packaged:
                 assert all(name == "index.html" or name.startswith("assets/") for name in packaged.namelist())
+                assert tab_title in packaged.read("index.html").decode("utf-8")
             for mapping in result["assets"]:
                 assert (output / mapping["destination"]).read_bytes() == Path(mapping["source"]).read_bytes()
             if node:
@@ -52,6 +56,7 @@ def main():
         index = good / "index.html"
         original = index.read_bytes()
         for needle, replacement, message in (
+            (tab_title, '<title>UserStory</title>', "HTML outside the permitted paste/title/databook regions changed"),
             ('assets/playbook/p1.svg', 'assets/playbook/P1.svg', "Case mismatch"),
             ('assets/playbook/p1.svg', 'assets/playbook/missing.svg', "Missing reference"),
             ('assets/playbook/p1.svg', '../../outside.svg', "Path escapes ZIP"),
@@ -103,7 +108,7 @@ def main():
             raise AssertionError("An invalid empty package directory was accepted")
         (good / "assets/BadName").rmdir()
         assert audit_path(good)["code"] == "passed"
-    print("PASS: 8 media combinations, optional databook removal, exact bytes/paths, source protection and rejection checks")
+    print("PASS: 8 media combinations, browser tab titles/escaping, optional databook removal, exact bytes/paths, source protection and rejection checks")
     print("JS syntax: " + ("PASS" if node else "NOT RUN (node unavailable)"))
     print("Media decoding/browser/platform: NOT RUN by this self-check; use tasks/audit.md")
 

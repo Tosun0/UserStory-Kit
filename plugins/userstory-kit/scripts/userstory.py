@@ -32,6 +32,14 @@ def read(path):
     return path.read_bytes().decode("utf-8-sig")
 
 
+def name_page(text, title):
+    text = text.replace("<title>UserStory</title>", f"<title>{html.escape(title, quote=False)}</title>", 1)
+    for _, label, _ in BLOCKS.values():
+        text = text.replace(f'data-screen-name="가족을 위한 두 번째 차 {label}"',
+                            f'data-screen-name="{html.escape(title, quote=True)} {label}"')
+    return text
+
+
 def markers(kind):
     if kind == "css":
         return "/* ▼ 내 디자인 붙여넣기 ▼", "/* ▲ 여기까지 ▲ */"
@@ -192,10 +200,7 @@ def audit(files, title=None, zip_bytes=None):
         if not title or attrs.get("data-screen-name") != f"{title} {label}":
             errors.append(f"Screen title mismatch: {attrs['id']}")
 
-    base = read(TEMPLATE / "index.html")
-    for _, label, _ in BLOCKS.values():
-        base = base.replace(f'data-screen-name="가족을 위한 두 번째 차 {label}"',
-                            f'data-screen-name="{html.escape(title or "", quote=True)} {label}"')
+    base = name_page(read(TEMPLATE / "index.html"), title or "")
     if "data-book" not in order:
         base = remove_databook(base)
     if skeleton(text, expected) != skeleton(base, expected):
@@ -342,9 +347,7 @@ def build(config_path, output, zip_path):
         prepared.append((section, kind, sources, background.lower()))
 
     index, css, js = (read(TEMPLATE / name) for name in ("index.html", "assets/style.css", "assets/app.js"))
-    for _, label, _ in BLOCKS.values():
-        index = index.replace(f'data-screen-name="가족을 위한 두 번째 차 {label}"',
-                              f'data-screen-name="{html.escape(title, quote=True)} {label}"')
+    index = name_page(index, title)
     if config.get("databook") is None:
         index = remove_databook(index)
     styles, scripts = {}, {}
