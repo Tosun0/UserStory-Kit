@@ -1,4 +1,0 @@
-interface:
-  display_name: "유저스토리 제작"
-  short_description: "제공 템플릿과 가이드로 유저스토리 콘텐츠를 제작하고 ZIP으로 정리합니다"
-  default_prompt: "$userstory-build로 제목과 첨부한 플레이북, 시나리오 캔버스를 업로드용 ZIP으로 제작해 주세요."

@@ -23,8 +23,14 @@ Codex의 Git 마켓플레이스 추가 화면에서 `https://github.com/Tosun0/U
 
 Codex에 플러그인을 설치한 뒤 새 대화에서 다음 스킬을 사용합니다.
 
-- `$userstory-build`: 제목, 영상/이미지 플레이북, 카드/세로형 시나리오 캔버스, 선택 데이터북과 출력 위치를 전달해 제작합니다.
-- `$userstory-audit`: 제작된 폴더 또는 ZIP을 가이드 7장·9장과 대조하여 검수합니다. 검수만 요청하면 코드를 변경하지 않습니다.
+| 표시명 | 호출명 | 역할 |
+|---|---|---|
+| [00_총괄](plugins/userstory-kit/skills/00-userstory/SKILL.md) | `$00-userstory` | 입력 확인·전체 조립·최종 검수·ZIP 납품. 전체 검수만 요청하면 읽기 전용 |
+| [01_플레이북](plugins/userstory-kit/skills/01-playbook/SKILL.md) | `$01-playbook` | 영상/이미지 플레이북과 재생·정지·볼륨·다시보기 |
+| [02_시나리오 캔버스](plugins/userstory-kit/skills/02-scenariocanvas/SKILL.md) | `$02-scenariocanvas` | 카드/세로형 시캔의 배치·전환·인디케이터 |
+| [03_데이터북](plugins/userstory-kit/skills/03-databook/SKILL.md) | `$03-databook` | 선택 데이터북 조립 또는 전체 블록 삭제 |
+
+전체 제작은 총괄로 시작하고, 특정 블록만 바꿀 때는 해당 스킬을 사용합니다. 블록 스킬은 다른 블록을 재생성하지 않습니다. 검수는 총괄의 후속 태스크로 유지하며 별도 중복 스킬은 두지 않습니다.
 
 원본 템플릿은 그대로 보관하고 별도 출력 사본에만 작성합니다. Git에서 사라지는 빈 리소스 폴더는 제작 태스크가 복원합니다. 생성한 콘텐츠·검수 캡처·ZIP은 이 플러그인 원본에 섞지 않습니다.
 
