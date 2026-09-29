@@ -1,0 +1,3 @@
+# Keep supplied guide and template bytes unchanged across checkouts.
+assets/template/** -text
+references/guidev0929.md -text

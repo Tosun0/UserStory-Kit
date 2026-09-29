@@ -1,0 +1,30 @@
+/* assets/style.css */
+
+/* ─── 플랫폼 기본 설정 (가이드 md 최소 템플릿과 동일) — 지우거나 고치지 마세요 ─── */
+* { box-sizing: border-box; }
+
+html {
+  overflow-x: hidden;
+  overflow-y: auto;          /* hidden 금지 */
+  scroll-behavior: smooth;
+}
+
+body { margin: 0; min-height: 100vh; }
+
+.page-section {
+  position: relative;        /* absolute · fixed 금지 */
+  width: 100%;
+  min-height: 100vh;         /* height 고정 금지 */
+}
+
+.inner {
+  padding: 80px 40px 96px;   /* 상단 헤더 · 하단 FAB 회피 */
+}
+
+/* ▼ 내 디자인 붙여넣기 ▼
+   - 내 파일의 <style> 과 </style> 사이 내용을 이 아래에 붙여넣으세요.
+   - 플레이북, 시나리오캔버스(, 데이터북) 디자인을 차례로 이어서 붙이면 돼요.
+   - html 이나 body 에 overflow: hidden 또는 height: 100vh 가 있으면 지워주세요. */
+
+
+/* ▲ 여기까지 ▲ */

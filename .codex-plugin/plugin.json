@@ -1,0 +1,26 @@
+{
+  "name": "userstory-kit",
+  "version": "0.1.0+codex.20260929062652",
+  "description": "\uc81c\uacf5 \ud15c\ud50c\ub9bf\uacfc \uc81c\uc791 \uac00\uc774\ub4dc\uc5d0 \ub530\ub77c UserStory\ub97c \uc81c\uc791\ud558\uace0 \uac80\uc218\ud569\ub2c8\ub2e4.",
+  "author": {
+    "name": "tosun0",
+    "email": "tosun0@users.noreply.github.com"
+  },
+  "skills": "./skills/",
+  "repository": "https://github.com/Tosun0/UserStory-Kit",
+  "interface": {
+    "displayName": "\uc720\uc800\uc2a4\ud1a0\ub9ac \ud0a4\ud2b8",
+    "shortDescription": "UserStory \ud15c\ud50c\ub9bf \uae30\ubc18 \uc81c\uc791 \u00b7 \uac80\uc218",
+    "longDescription": "\uc81c\ubaa9, \uc601\uc0c1\u00b7\uc774\ubbf8\uc9c0 \ud50c\ub808\uc774\ubd81, \uce74\ub4dc\u00b7\uc138\ub85c\ud615 \uc2dc\ub098\ub9ac\uc624 \uce94\ubc84\uc2a4\uc640 \uc120\ud0dd \ub370\uc774\ud130\ubd81\uc744 \ubc1b\uc544 \uc81c\uacf5 \ud15c\ud50c\ub9bf\uc5d0 \uc870\ub9bd\ud569\ub2c8\ub2e4. v0929 \uc804\ub2ec \uac00\uc774\ub4dc\uc758 \ucf54\ub4dc \uac80\uc0ac\uc640 \ub450 \ud574\uc0c1\ub3c4 \uc2e4\ud638\uc2a4\ud305 \uac80\uc218\ub97c \uac70\uccd0 \uc5c5\ub85c\ub4dc\uc6a9 ZIP\uc744 \uc815\ub9ac\ud569\ub2c8\ub2e4.",
+    "developerName": "tosun0",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "\ucca8\ubd80\ud55c \uc791\uc5c5\ubb3c\ub85c UserStory \uc5c5\ub85c\ub4dc\uc6a9 ZIP\uc744 \uc81c\uc791\ud574 \uc8fc\uc138\uc694.",
+      "\uc774 UserStory\ub97c \uac00\uc774\ub4dc 7\uc7a5\uacfc 9\uc7a5\uc5d0 \ub9de\ucdb0 \uac80\uc218\ud574 \uc8fc\uc138\uc694."
+    ]
+  }
+}

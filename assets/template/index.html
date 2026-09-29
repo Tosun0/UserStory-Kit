@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UserStory</title>
+  <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+  <!--
+    ■ 사용법
+    1. 자리는 위에서부터 3곳이에요: ① 플레이북(필수) → ② 시나리오캔버스(필수) → ③ 데이터북(선택)
+       이 순서가 사용자가 스크롤하며 보는 순서예요. 자리의 순서는 바꾸지 마세요.
+       데이터북을 안 만들었다면 "데이터북이 없으면 여기부터 지우기" 줄부터 "여기까지 지우기" 줄까지 통째로 지우세요.
+    2. 각 자리의 "▼ … 코드 붙여넣기 시작 ▼" 줄과 "▲ … 끝 ▲" 줄 사이에
+       내 파일의 <body> 와 </body> 사이 내용만 붙여넣으세요.
+       시나리오캔버스가 이미지 한 장이면 <img src="./assets/scenariocanvas/canvas.webp" alt="…"> 한 줄만 넣으세요.
+    3. 이름(data-screen-name)은 "유저스토리 제목 + 공백 한 칸 + 블록명" 이에요.
+       앞의 "가족을 위한 두 번째 차" 만 내 유저스토리 제목으로 바꾸고, 뒤의 블록명(플레이북 · 시나리오 캔버스 · 데이터북)은 그대로 두세요.
+       data-screen-id(playbook_main · canvas_main · databook_main)는 정해진 값이라 바꾸지 마세요.
+    4. 그 밖의 줄(section, div, main 등)은 지우거나 고치지 마세요. (데이터북 자리를 통째로 지우는 것만 예외)
+    5. 그림 · 영상 · 글꼴 파일은 assets 폴더 안에 넣으세요.
+       플레이북 것은 assets/playbook, 시나리오캔버스 것은 assets/scenariocanvas, 데이터북 것은 assets/databook
+  -->
+  <main>
+    <section id="playbook" class="page-section"
+             data-screen-id="playbook_main"
+             data-screen-name="가족을 위한 두 번째 차 플레이북">
+      <div class="inner">
+        <!-- ▼ 플레이북 코드 붙여넣기 시작 ▼ -->
+
+        <!-- ▲ 플레이북 코드 붙여넣기 끝 ▲ -->
+      </div>
+    </section>
+
+    <section id="scenario-canvas" class="page-section"
+             data-screen-id="canvas_main"
+             data-screen-name="가족을 위한 두 번째 차 시나리오 캔버스">
+      <div class="inner">
+        <!-- ▼ 시나리오캔버스 코드 붙여넣기 시작 ▼ -->
+
+        <!-- ▲ 시나리오캔버스 코드 붙여넣기 끝 ▲ -->
+      </div>
+    </section>
+
+    <!-- ✂ 데이터북이 없으면 여기부터 지우기 ✂ -->
+    <section id="data-book" class="page-section"
+             data-screen-id="databook_main"
+             data-screen-name="가족을 위한 두 번째 차 데이터북">
+      <div class="inner">
+        <!-- ▼ 데이터북 코드 붙여넣기 시작 ▼ -->
+
+        <!-- ▲ 데이터북 코드 붙여넣기 끝 ▲ -->
+      </div>
+    </section>
+    <!-- ✂ 데이터북이 없으면 여기까지 지우기 ✂ -->
+  </main>
+
+  <script src="./assets/app.js"></script>
+</body>
+</html>
